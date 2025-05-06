@@ -1,30 +1,6 @@
 {
   "version": 4,
   "routes": {
-    "/conference": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "Next-Action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/conference",
-      "dataRoute": "/conference.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/": {
       "experimentalBypassFor": [
         {
@@ -48,13 +24,37 @@
         "x-next-revalidated-tags",
         "x-next-revalidate-tag-token"
       ]
+    },
+    "/conference": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/conference",
+      "dataRoute": "/conference.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
     }
   },
   "dynamicRoutes": {},
   "notFoundRoutes": [],
   "preview": {
-    "previewModeId": "45156c9b8a61ccedcb352b03995e3be5",
-    "previewModeSigningKey": "84f88ee222977ba67d29a04a4ec6f5ee65ac6ef514797988fe319ab3cd7b5f16",
-    "previewModeEncryptionKey": "4219347589d8dc7b080fe119761f633015b1380ec70c61a4019c371219d021eb"
+    "previewModeId": "693fc750a5619a413b1a57720677a93a",
+    "previewModeSigningKey": "39e557e0d0cda00f07ad202bd10b0497ee73291acfb50ca0b273878dfd863fd7",
+    "previewModeEncryptionKey": "f836dd882a1151cb74c1f746a9956af3c2723361dd195e4e79c0af6102e31a8b"
   }
 }

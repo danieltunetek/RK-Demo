@@ -12,7 +12,7 @@
     },
     "distDir": ".next",
     "cleanDistDir": true,
-    "assetPrefix": "/designsystem",
+    "assetPrefix": "/RK-Demo/",
     "cacheMaxMemorySize": 52428800,
     "configOrigin": "next.config.ts",
     "useFileSystemPublicRoutes": true,
@@ -46,7 +46,7 @@
         256,
         384
       ],
-      "path": "/designsystem/_next/image",
+      "path": "/RK-Demo/_next/image",
       "loader": "default",
       "loaderFile": "",
       "domains": [],
@@ -69,9 +69,9 @@
       "pagesBufferLength": 5
     },
     "amp": {
-      "canonicalBase": "/designsystem"
+      "canonicalBase": "/RK-Demo"
     },
-    "basePath": "/designsystem",
+    "basePath": "/RK-Demo",
     "sassOptions": {},
     "trailingSlash": false,
     "i18n": null,

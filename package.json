@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://norwegianredcross.github.io/DesignSystem",
-
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build", 
