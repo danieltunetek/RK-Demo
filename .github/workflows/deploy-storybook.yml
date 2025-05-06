@@ -1,0 +1,92 @@
+name: Deploy Next.js App to gh-pages Root
+
+on:
+  push:
+    branches:
+      - main # This workflow runs when you push to the 'main' branch
+
+jobs:
+  deploy-app:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows the action to push to the gh-pages branch
+
+    steps:
+      - name: Checkout main branch code 🛎️
+        uses: actions/checkout@v4
+        with:
+          ref: main # Explicitly checks out the main branch
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Or your Next.js app's specific Node.js version
+          cache: 'npm'
+
+      - name: Install Next.js App Dependencies 🔧
+        run: npm ci # 'ci' is generally preferred for CI environments
+
+      - name: Build Next.js App 🏗️
+        # This command should build your Next.js app for static export.
+        # Ensure your next.config.js has `output: 'export'`
+        # and that this script generates files into an 'out/' directory.
+        run: npm run build
+
+      - name: Deploy to gh-pages branch (Root) 🚀
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITHUB_WORKSPACE is an environment variable provided by GitHub Actions
+          # that points to the root of your checked-out repository.
+          APP_BUILD_DIR: ${{ github.workspace }}/out
+        run: |
+          set -e # Exit immediately if a command fails
+
+          echo "Cloning gh-pages branch into 'gh-pages-deploy' directory..."
+          # Clone only the gh-pages branch, or create it if it doesn't exist
+          git clone --branch=gh-pages --single-branch "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages-deploy || \
+          (echo "gh-pages branch not found, creating it..." && \
+           mkdir gh-pages-deploy && cd gh-pages-deploy && \
+           git init && git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" && \
+           git checkout -b gh-pages && cd ..)
+          
+          cd gh-pages-deploy
+          echo "Current directory: $(pwd)"
+
+          echo "Configuring git user..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Ensure .nojekyll exists at the root (important for _next folder)
+          echo "Ensuring .nojekyll file exists..."
+          touch .nojekyll
+
+          # Clear out existing files from the root,
+          # EXCEPT 'storybook' directory, '.git', and '.nojekyll'.
+          echo "Clearing old app files from root, preserving 'storybook' directory and essential dotfiles..."
+          find . -maxdepth 1 -not -name '.git' -not -name 'storybook' -not -name '.nojekyll' -exec rm -rf {} \;
+          
+          echo "Copying new Next.js app files from $APP_BUILD_DIR to root..."
+          # The cp command needs to handle if APP_BUILD_DIR doesn't exist or is empty
+          if [ -d "$APP_BUILD_DIR" ] && [ "$(ls -A $APP_BUILD_DIR)" ]; then
+            cp -r $APP_BUILD_DIR/* .
+          else
+            echo "Warning: Next.js build directory '$APP_BUILD_DIR' is empty or does not exist."
+            # Optionally, create an empty index.html or error page
+            # touch index.html
+          fi
+
+          echo "Staging changes..."
+          git add -A
+          
+          if git diff --staged --quiet; then
+            echo "No changes to Next.js app to deploy."
+          else
+            echo "Committing and pushing Next.js app deployment..."
+            git commit -m "Deploy Next.js app (from commit: ${{ github.sha }})"
+            git push origin gh-pages
+            echo "Next.js app deployed to root of gh-pages."
+          fi
+          
+          cd ..
+          echo "Cleaning up gh-pages-deploy directory..."
+          rm -rf gh-pages-deploy
