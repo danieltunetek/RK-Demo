@@ -2,7 +2,7 @@
   "name": "rk-demo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://norwegianredcross.github.io/DesignSystem",
+  "homepage": "https://danieltunetek.github.io/rk-demo",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
