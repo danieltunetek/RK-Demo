@@ -4,8 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
-import { DigDirButton as Button } from "componentlibrary";
-import { Tabs } from "@digdir/designsystemet-react";
+
+import { Tabs, Button  } from "@digdir/designsystemet-react";
 import styles from "./styles.module.css";
 
 export interface HeaderProps {

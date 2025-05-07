@@ -2,15 +2,15 @@
   "version": 3,
   "pages404": true,
   "caseSensitive": false,
-  "basePath": "/RK-Demo",
+  "basePath": "/DesignSystem",
   "redirects": [
     {
-      "source": "/RK-Demo/",
-      "destination": "/RK-Demo",
+      "source": "/DesignSystem/",
+      "destination": "/DesignSystem",
       "basePath": false,
       "internal": true,
       "statusCode": 308,
-      "regex": "^/RK-Demo/$"
+      "regex": "^/DesignSystem/$"
     },
     {
       "source": "/:path+/",
@@ -62,9 +62,9 @@
   "rewrites": {
     "beforeFiles": [
       {
-        "source": "/RK-Demo//_next/:path+",
-        "destination": "/RK-Demo/_next/:path+",
-        "regex": "^/RK-Demo//_next(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))(?:/)?$"
+        "source": "/DesignSystem//_next/:path+",
+        "destination": "/DesignSystem/_next/:path+",
+        "regex": "^/DesignSystem//_next(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))(?:/)?$"
       }
     ],
     "afterFiles": [],
